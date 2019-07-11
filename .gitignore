@@ -1,0 +1,9 @@
+# Config
+/.bundle
+
+# Tests
+/coverage
+
+# Build
+Gemfile.lock
+*.gem
