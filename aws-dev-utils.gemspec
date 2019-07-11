@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.files         = Dir.glob('lib/**/*')
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ['lib']
+  s.required_ruby_version = '>= 2.5.0'
   s.add_runtime_dependency 'aws-sdk-core', '>= 2.0.0'
   s.add_runtime_dependency 'deepsort', '~> 0.4.2'
 end
