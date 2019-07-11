@@ -8,7 +8,7 @@ module AwsDevUtils
     using AwsDevUtils::Refinements
 
     def test_with_cache
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_cache
       assert_instance_of ClientWrapper, a
       assert a.send(:cache?)
@@ -17,7 +17,7 @@ module AwsDevUtils
     end
 
     def test_with_retry
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_retry
       assert_instance_of ClientWrapper, a
       assert a.send(:retry?)
@@ -26,7 +26,7 @@ module AwsDevUtils
     end
 
     def test_with_next_token
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_next_token
       assert_instance_of ClientWrapper, a
       assert a.send(:next_token?)
@@ -35,7 +35,7 @@ module AwsDevUtils
     end
 
     def test_with_cache_with_retry
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_cache.with_retry
       assert_instance_of ClientWrapper, a
       assert a.send(:cache?)
@@ -44,7 +44,7 @@ module AwsDevUtils
     end
 
     def test_with_cache_with_next_token
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_cache.with_next_token
       assert_instance_of ClientWrapper, a
       assert a.send(:cache?)
@@ -53,7 +53,7 @@ module AwsDevUtils
     end
 
     def test_with_retry_with_next_token
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_retry.with_next_token
       assert_instance_of ClientWrapper, a
       assert a.send(:next_token?)
@@ -62,7 +62,7 @@ module AwsDevUtils
     end
 
     def test_with_retry_with_next_token_with_cache
-      client = Aws::STS::Client.new
+      client = Aws::STS::Client.new(region: "foo")
       a = client.with_retry.with_next_token.with_cache
       assert_instance_of ClientWrapper, a
       assert a.send(:next_token?)
