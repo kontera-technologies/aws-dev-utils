@@ -1,34 +1,23 @@
-# AWS Utilities [![Build Status](https://travis-ci.org/kontera-technologies/aws-dev-utils.svg?branch=master)](https://travis-ci.org/kontera-technologies/aws-dev-utils) [![codecov](https://codecov.io/gh/kontera-technologies/aws-dev-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/kontera-technologies/aws-dev-utils)
+# AWS Dev Utilities [![Build Status](https://travis-ci.org/kontera-technologies/aws-dev-utils.svg?branch=master)](https://travis-ci.org/kontera-technologies/aws-dev-utils) [![codecov](https://codecov.io/gh/kontera-technologies/aws-dev-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/kontera-technologies/aws-dev-utils)
 
-Provides common ruby utilities to working with AWS.
+This library provides common ruby utilities to working with AWS SDK. It provides a general API Wrapper with Redis based Caching, paging and retry functionalities.
 
-## `AwsDevUtils::NextTokenWrapper`
-Adds the `with_next_token` method to all `AWS` client objects.
-By using the `NextTokenWrapper`, the `AWS` client functions will be re-executed
-and their results will be concatenated until either no more results are available
-or the max number of requests is reached.
+## Installation
 
-_Note: Before using this function, add `using AwsDevUtils::Refinements` to add the
-method to the AWS client objects._
+Add this line to your application's Gemfile:
 
-### Examples:
-- `s3_client.with_next_token.list_objects_v2(...)`
-- `s3_client.with_next_token(50).list_buckets(...)`
-- `ec2_client.with_next_token.describe_reserved_instances(...)`
-- `pricing_client.with_next_token.get_products(...)`
+```ruby
+gem 'aws-dev-utils'
+```
 
-## `AwsDevUtils::RetryWrapper`
-Adds the `with_retry` method to all `AWS` client objects.
-By using the `RetryWrapper`, the client functions will be retried in case of an
-exception (until the max number of retries is reached).
+And then execute:
 
-_Note: Before using this function, add `using AwsDevUtils::Refinements` to add the
-method to the AWS client objects._
+    $ bundle install
 
-### Examples:
-- `s3_client.with_retry.list_objects_v2(...)`
-- `ec2_client.with_retry(10).describe_reserved_instances(...)`
-- `pricing_client.with_retry.get_products(...)`
+Or install it yourself as:
+
+    $ gem install gem 'aws-dev-utils'
+
 
 ## Release new version
 The `./release-new-version.sh` script will bump the version number. By default it will
@@ -37,3 +26,7 @@ minor or major version accordingly.
 
 The script will also create a git commit for the version bump, push it to this
 GitHub repository and upload it to [rubygems.org](https://rubygems.org).
+
+
+### Disclaimer
+This project is still in its early stages so things could be a little bit buggy, if you find one feel free to [report](https://github.com/kontera-technologies/aws-dev-utils/issues) it.
