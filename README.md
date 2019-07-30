@@ -20,7 +20,7 @@ Or install it yourself as:
     $ gem install gem 'aws-dev-utils'
 
 ## Usage
-_Note: Before using `with_next_token` / `with_cache` / `with_retry` functions:
+Note: Before using `with_next_token` / `with_cache` / `with_retry` functions:
 
 ```ruby
 require 'aws-dev-utils'
