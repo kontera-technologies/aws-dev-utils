@@ -6,11 +6,16 @@ module AwsDevUtils
         @hash = {}
       end
 
+      # Get the value of key. If not found, returns nil
       def get key
         clean_cache!
         @hash[key][1]
       end
 
+      # Set key to hold the value and set key to timeout after the a given expiration time(in seconds).
+      # @param [Object] key
+      # @param [Object] value
+      # @param [Integer] exp - the key-value timeout
       def set key, value, exp
         clean_cache!
         @hash[key] = [Time.now + exp, value]

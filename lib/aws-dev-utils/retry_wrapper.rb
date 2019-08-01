@@ -1,6 +1,9 @@
 module AwsDevUtils
   class RetryWrapper
 
+    # Initialize a new RetryWrapper
+    # @params [?] client - Aws client / CacheWrapper / NextTokenWrapper
+    # @param [Integer] max_tries - max number of retries
     def initialize client, max_tries=5
       @client = client
       @max_tries = max_tries
