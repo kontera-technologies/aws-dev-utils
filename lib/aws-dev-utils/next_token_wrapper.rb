@@ -1,7 +1,10 @@
 module AwsDevUtils
   class NextTokenWrapper
 
-    def initialize client, max=100
+    # Initialize a new NextTokenWrapper
+    # @params client - Aws client / CacheWrapper / RetryWrapper
+    # @param [Integer] max - max number of requests
+    def initialize client, max=100 #:nodoc:
       @client = client
       @max = max
     end
