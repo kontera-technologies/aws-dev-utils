@@ -13,9 +13,9 @@ module AwsDevUtils
       end
 
       # Set key to hold the value and set key to timeout after the a given expiration time(in seconds).
-      # @param [Object] key
-      # @param [Object] value
-      # @param [Integer] exp - the key-value timeout
+      # @param key [Object]
+      # @param value [Object]
+      # @param exp [Integer]  - the key-value timeout
       def set key, value, exp
         clean_cache!
         @hash[key] = [Time.now + exp, value]

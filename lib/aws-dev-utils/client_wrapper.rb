@@ -3,6 +3,7 @@ module AwsDevUtils
     include AwsDevUtils::Utils
 
     # Initialize a new ClientWrapper
+    # Internal use only
     # @params [Seahorse::Client::Base] client :Aws client
     # @param [Hash] options
     # @option options [String] :next_token max number of requests
