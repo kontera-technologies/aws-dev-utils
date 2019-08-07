@@ -5,7 +5,8 @@ module AwsDevUtils
     include AwsDevUtils::Utils
 
     # Initialize a new CacheWrapper
-    # @params [?] client - Aws client / NextTokenWrapper / RetryWrapper
+    # Internal use only
+    # @params client - Aws client / NextTokenWrapper / RetryWrapper
     # @param [Integer] exp - the key-value timeout
     def initialize client, exp=60
       @client = client
