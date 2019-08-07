@@ -1,10 +1,9 @@
 module AwsDevUtils
   class RetryWrapper
 
-    # Initialize a new RetryWrapper
-    # Internal use only
-    # @params client [Aws client / NextTokenWrapper / RetryWrapper]
-    # @param [Integer] max_tries - max number of retries
+    # Initialize a new RetryWrapper, internal use only
+    # @params client [Aws client, NextTokenWrapper, RetryWrapper]
+    # @param max_tries [Integer] - max number of retries
     def initialize client, max_tries=5
       @client = client
       @max_tries = max_tries

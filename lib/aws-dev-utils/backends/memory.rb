@@ -6,7 +6,7 @@ module AwsDevUtils
         @hash = {}
       end
 
-      # Get the value of key. If not found, returns nil
+      # Get the value of key, if not found, returns nil.
       def get key
         clean_cache!
         @hash[key][1]

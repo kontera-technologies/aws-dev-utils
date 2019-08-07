@@ -4,13 +4,13 @@ module AwsDevUtils
   module Backend
     class Redis
       # :nocov:
-      # Initialize a new redis client
+      # Initialize a new redis client.
       # @params url [String] - specify redis url connection
       def initialize url='redis://localhost:6379'
         @redis = ::Redis.new(url: url)
       end
 
-      # Get the value of key. If not found, returns nil
+      # Get the value of key, if not found, returns nil.
       def get key
         @redis.get key
       end

@@ -1,10 +1,9 @@
 module AwsDevUtils
   class NextTokenWrapper
 
-    # Initialize a new NextTokenWrapper
-    # Internal use only
+    # Initialize a new NextTokenWrapper, internal use only
     # @params client [Aws client / NextTokenWrapper / RetryWrapper]
-    # @param [Integer] max - max number of requests
+    # @param max [Integer] - max number of requests
     def initialize client, max=100
       @client = client
       @max = max

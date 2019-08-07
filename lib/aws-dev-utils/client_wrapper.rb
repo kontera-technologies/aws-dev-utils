@@ -2,13 +2,12 @@ module AwsDevUtils
   class ClientWrapper
     include AwsDevUtils::Utils
 
-    # Initialize a new ClientWrapper
-    # Internal use only
-    # @params [Seahorse::Client::Base] client :Aws client
+    # Initialize a new ClientWrapper, internal use only
+    # @params [Seahorse::Client::Base] client
     # @param [Hash] options
-    # @option options [String] :next_token max number of requests
-    # @option options [String] :retry max number of retries
-    # @option options [String] :cache the key-value timeout
+    # @option options [String] next_token max number of requests
+    # @option options [String] retry max number of retries
+    # @option options [String] cache the key-value timeout
     def initialize client, options={}
       @client = client
       @options = options
