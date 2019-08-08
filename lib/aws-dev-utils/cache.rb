@@ -5,7 +5,7 @@ module AwsDevUtils
   class Cache
     include Singleton
 
-    #Allows to inject the cache type
+    # Injectable backend. 
     attr_writer :backend
 
     class << self
