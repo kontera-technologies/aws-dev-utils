@@ -3,6 +3,8 @@ module AwsDevUtils
 
     module_function
 
+    # Transforms an object to a nested struct.
+    # @return [OpenStruct]
     def nested_struct obj
       case obj
       when Hash
@@ -22,6 +24,8 @@ module AwsDevUtils
       end
     end
 
+    # Transforms an object to a nested hash.
+    # @return [Hash]
     def nested_hash obj
       if obj.kind_of? Array
         obj.map(&method(__method__))

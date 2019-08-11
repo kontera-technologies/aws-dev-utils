@@ -2,19 +2,28 @@ module AwsDevUtils
   class ClientWrapper
     include AwsDevUtils::Utils
 
+    # Initialize a new ClientWrapper, internal use only
+    # @params [Seahorse::Client::Base] client
+    # @param [Hash] options
+    # @option options [String] next_token max number of requests
+    # @option options [String] retry max number of retries
+    # @option options [String] cache the key-value timeout
     def initialize client, options={}
       @client = client
       @options = options
     end
 
+    # @return ClientWrapper with next_token option
     def with_next_token max=100
       self.class.new(@client, @options.merge(next_token: max))
     end
 
+    # @return ClientWrapper with retry option
     def with_retry max=5
       self.class.new(@client, @options.merge(retry: max))
     end
 
+    # @return ClientWrapper with cache option
     def with_cache exp=60
       self.class.new(@client, @options.merge(cache: exp))
     end

@@ -25,7 +25,7 @@ set -e
 #     Name: aws-dev-utils
 #     Version: 1.1.0
 #     File: aws-dev-utils-1.1.0.gem
-#   Pushing aws-dev-utils-1.1.0.gem to http://gems.kontera.com/...
+#   Pushing aws-dev-utils-1.1.0.gem to https://rubygems.org/...
 #   Gem aws-dev-utils-1.1.0.gem received and indexed.
 ################################################################################
 
