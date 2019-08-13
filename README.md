@@ -62,7 +62,7 @@ AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url
 
 _Note: Data will be restored from the cache only if it is the same request to AWS client, the same filters and the same expiration time ._
 
-- ```ruby
+```ruby
   # Memory Caching.
   require 'aws-dev-utils'
   using AwsDevUtils::Refinements
@@ -71,9 +71,9 @@ _Note: Data will be restored from the cache only if it is the same request to AW
   ec2_client.
     with_cache.
     describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
-  ```
+ ```
 
-- ```ruby
+```ruby
   # Redis based caching with default experiation time (60 seconds).
   require 'aws-dev-utils'
   using AwsDevUtils::Refinements
@@ -82,9 +82,9 @@ _Note: Data will be restored from the cache only if it is the same request to AW
   ec2_client.
    with_cache.
    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
-  ```
+```
 
-- ```ruby
+```ruby
   # Redis based caching with custom expiration time (10 minutes).
   require 'aws-dev-utils'
   using AwsDevUtils::Refinements
@@ -93,9 +93,9 @@ _Note: Data will be restored from the cache only if it is the same request to AW
   ec2_client.
     with_cache(600).
     describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
-  ```
+```
 
-- ```ruby
+```ruby
   # Example of different cache keys from requests.
   require 'aws-dev-utils'
   using AwsDevUtils::Refinements
@@ -117,7 +117,7 @@ _Note: Data will be restored from the cache only if it is the same request to AW
     with_cache(600).
     describe_instances(filters:[{ name: "vpc-id", values: ["vpc-bar"]}])
 
-  ```
+```
 
 ### with_retry
 By using the `client.with_retry`, the client functions will be retried in case of an exception (until the max number of retries is reached - the default is 5).  
