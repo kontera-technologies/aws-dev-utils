@@ -27,7 +27,7 @@ require 'aws-dev-utils'
 using AwsDevUtils::Refinements
 ```
 
-## with_next_token
+### with_next_token
 Many AWS operations limit the number of results returned with each response. To make it easy to get the next page of results, every AWS response object is enumerable.  
 This functionality is rarely needed and causes a lot of boilerplate code.  
 Using the `client.with_next_token` the paged results will be collected for you.
@@ -50,7 +50,7 @@ ec2_client.
   describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
 ```
 
-## with_cache
+### with_cache
 In many cases a cache is required due to many processes or different machines querying the AWS api for data.  
 By using the `client.with_cache`, the client functions results will be stored in cache.  
 The default cache is a simple in memory *time based* store - `AwsDevUtils::Backend::Memory`.  
@@ -119,7 +119,7 @@ _Note: Data will be restored from the cache only if it is the same request to AW
 
   ```
 
-## with_retry
+### with_retry
 By using the `client.with_retry`, the client functions will be retried in case of an exception (until the max number of retries is reached - the default is 5).  
 Before each retry the client will sleep for an increasing number of seconds (implements exponential backoff)
 ```ruby
@@ -138,7 +138,7 @@ ec2_client.
   describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
 ```
 
-## Combinations of wrappers
+### Combinations of wrappers
 It is possible to combine between each of the wrappers:
 ```ruby
 require 'aws-dev-utils'
