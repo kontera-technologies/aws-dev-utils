@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary       = 'Ruby library gem that provides common AWS utilities'
   s.description   = ''
 
-  s.files         = Dir.glob('lib/**/*')
+  s.files         = Dir["README.md", "LICENSE", "lib/**/*"]
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 2.5.0'
