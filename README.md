@@ -63,60 +63,59 @@ AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url
 _Note: Data will be restored from the cache only if it is the same request to AWS client, the same filters and the same expiration time ._
 
 ```ruby
-  # Memory Caching.
-  require 'aws-dev-utils'
-  using AwsDevUtils::Refinements
+# Memory Caching.
+require 'aws-dev-utils'
+using AwsDevUtils::Refinements
 
-  ec2_client = Aws::EC2::Client.new
-  ec2_client.
-    with_cache.
-    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
- ```
-
-```ruby
-  # Redis based caching with default experiation time (60 seconds).
-  require 'aws-dev-utils'
-  using AwsDevUtils::Refinements
-
-  AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
-  ec2_client.
-   with_cache.
-   describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
+ec2_client = Aws::EC2::Client.new
+ec2_client.
+  with_cache.
+  describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
 ```
 
 ```ruby
-  # Redis based caching with custom expiration time (10 minutes).
-  require 'aws-dev-utils'
-  using AwsDevUtils::Refinements
+# Redis based caching with default experiation time (60 seconds).
+require 'aws-dev-utils'
+using AwsDevUtils::Refinements
 
-  AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
-  ec2_client.
-    with_cache(600).
-    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
+AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
+ec2_client.
+ with_cache.
+ describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
 ```
 
 ```ruby
-  # Example of different cache keys from requests.
-  require 'aws-dev-utils'
-  using AwsDevUtils::Refinements
+# Redis based caching with custom expiration time (10 minutes).
+require 'aws-dev-utils'
+using AwsDevUtils::Refinements
 
-  AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
+AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
+ec2_client.
+  with_cache(600).
+  describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
+```
 
-  # No cache data so request goes to AWS servers.
-  foo_1_instances = ec2_client.
-    with_cache(600).
-    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
+```ruby
+# Example of different cache keys from requests.
+require 'aws-dev-utils'
+using AwsDevUtils::Refinements
 
-  # Different filters than foo_1_instances so request goes to AWS servers.
-  bar_1_instances = ec2_client.
-    with_cache(600).
-    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-bar"]}])
+AwsDevUtils::Cache.instance.backend = AwsDevUtils::Backend::Redis.new("redis-url")
 
-  # Same filters as bar_1_instances, so result is fetched from cache.
-  bar_2_instances = ec2_client.
-    with_cache(600).
-    describe_instances(filters:[{ name: "vpc-id", values: ["vpc-bar"]}])
+# No cache data so request goes to AWS servers.
+foo_1_instances = ec2_client.
+  with_cache(600).
+  describe_instances(filters:[{ name: "vpc-id", values: ["vpc-foo"]}])
 
+# Different filters than foo_1_instances so request goes to AWS servers.
+bar_1_instances = ec2_client.
+  with_cache(600).
+  describe_instances(filters:[{ name: "vpc-id", values: ["vpc-bar"]}])
+
+# Same filters as bar_1_instances, so result is fetched from cache.
+bar_2_instances = ec2_client.
+  with_cache(600).
+  describe_instances(filters:[{ name: "vpc-id", values: ["vpc-bar"]}])
 ```
 
 ### with_retry
