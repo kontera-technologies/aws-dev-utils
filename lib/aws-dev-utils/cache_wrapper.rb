@@ -4,7 +4,10 @@ module AwsDevUtils
   class CacheWrapper
     include AwsDevUtils::Utils
 
-    def initialize client, exp=60, client_name: nil
+  # Initialize a new CacheWrapper, internal use only.
+  # @param client [Aws client, NextTokenWrapper, RetryWrapper]
+  # @param exp [Integer] - the key-value timeout
+  def initialize client, exp=60, client_name: nil
       @client = client
       @exp = exp
       @client_name = client_name || client.class.name
