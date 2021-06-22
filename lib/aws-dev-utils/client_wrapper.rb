@@ -22,7 +22,7 @@ module AwsDevUtils
     def method_missing m, *args, &block
       @client = RetryWrapper.new(@client, @options[:retry]) if retry?
       @client = NextTokenWrapper.new(@client, @options[:next_token]) if next_token?
-      @client = CacheWrapper.new(@client, @options[:cache]) if cache?
+      @client = CacheWrapper.new(@client, @options[:cache], client_name: @client.class.name) if cache?
 
       nested_struct(@client.send(m, *args, &block))
     end

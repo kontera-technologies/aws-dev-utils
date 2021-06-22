@@ -6,7 +6,7 @@ require 'aws-dev-utils/version'
 Gem::Specification.new do |s|
   s.name          = 'aws-dev-utils'
   s.version       = AwsDevUtils::VERSION
-  s.authors       = ['Infastructure']
+  s.authors       = ['Amobee BI Infrastructure']
   s.email         = ['infra@amobee.com']
   s.homepage      = 'https://github.com/kontera-technologies/aws-dev-utils'
   s.licenses      = ['MIT']
