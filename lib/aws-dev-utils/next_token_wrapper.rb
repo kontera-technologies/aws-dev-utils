@@ -24,7 +24,7 @@ module AwsDevUtils
         resp_keys = Array(resp_keys)
         req_keys = Array(req_keys)
 
-        while(!resp_keys.zero? && resp_keys.all?{ |resp_key| response[resp_key] } && i < @max) do
+        while(!resp_keys.empty? && resp_keys.all?{ |resp_key| response[resp_key] } && i < @max) do
           i += 1
           new_response = @client.send(m, props.merge( Hash[ req_keys.zip(response[resp_keys]) ] ) ).to_h
           new_response.each { |k,v| response[k] = v.is_a?(Array) ? response[k].concat(v) : v }
