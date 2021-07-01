@@ -50,20 +50,3 @@ module AwsDevUtils
 
   end
 end
-
-
-
-
-def do_call m, props = {}, &block
-  @client.send(m, props, &block).to_h.tap do |response|
-    i = 1
-    resp_key, req_key = extract_keys response
-    while(resp_key && response[resp_key] && i < @max) do
-      i += 1
-      new_response = @client.send(m, props.merge(req_key => response[resp_key])).to_h
-      new_response.each { |k,v| response[k] = v.is_a?(Array) ? response[k].concat(v) : v }
-      response.delete_if {|k,v| !new_response.keys.include?(k) }
-    end
-    response.delete resp_key
-  end
-end
