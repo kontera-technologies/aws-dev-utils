@@ -22,7 +22,8 @@ module AwsDevUtils
         resp_keys = Array(resp_keys)
         req_keys = Array(req_keys)
 
-        while(!resp_keys.empty? && resp_keys.all?{ |resp_key| response[resp_key] } && i < @max) do
+        next response if resp_keys.empty?
+        while(resp_keys.all?{ |resp_key| response[resp_key] } && i < @max) do
           i += 1
           new_response = @client.send(
             method,
