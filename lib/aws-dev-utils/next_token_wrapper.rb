@@ -10,12 +10,12 @@ module AwsDevUtils
     end
 
     def method_missing method, *args, &block
-      do_call(method,*args,&block)
+      do_call(method, *args, &block)
     end
 
     private
-    def do_call method, props = {}, &block
-      @client.send(method, props, &block).to_h.tap do |response|
+    def do_call method, *args, &block
+      @client.send(method, *args, &block).to_h.tap do |response|
         i = 1
         resp_keys, req_keys = extract_keys response
 
@@ -23,6 +23,8 @@ module AwsDevUtils
         req_keys = Array(req_keys)
 
         next response if resp_keys.empty?
+
+        props = args.first || {}
         while resp_keys.all?{ |resp_key| response[resp_key] } && i < @max do
           i += 1
           pagination_token_props =  Hash[req_keys.zip(resp_keys.map { |resp_key| response[resp_key] } ) ]
@@ -30,7 +32,7 @@ module AwsDevUtils
           new_response.each { |k,v| response[k] = v.is_a?(Array) ? response[k].concat(v) : v }
           response.delete_if { |k,v| !new_response.keys.include?(k) }
         end
-        response.delete resp_keys
+        resp_keys.each { |resp_key| response.delete resp_key}
       end
     end
 
