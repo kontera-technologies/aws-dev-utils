@@ -1,10 +1,12 @@
 module AwsDevUtils
   class NextTokenWrapper
 
+    DEFAULT_MAX=100
+
     # Initialize a new NextTokenWrapper, internal use only
     # @params client [Aws client / NextTokenWrapper / RetryWrapper]
     # @param max [Integer] - max number of requests
-    def initialize client, max=100
+    def initialize client, max=DEFAULT_MAX
       @client = client
       @max = max
     end
@@ -15,25 +17,28 @@ module AwsDevUtils
 
     private
     def do_call method, *args, &block
-      @client.send(method, *args, &block).to_h.tap do |response|
-        i = 1
-        resp_keys, req_keys = extract_keys response
+      response = @client.send(method, *args, &block).to_h
+      i = 1
+      resp_keys, req_keys = extract_keys response
+      resp_keys = Array(resp_keys)
+      req_keys = Array(req_keys)
 
-        resp_keys = Array(resp_keys)
-        req_keys = Array(req_keys)
+      return response if resp_keys.empty?
 
-        next response if resp_keys.empty?
+      props = args.first || {}
+      while resp_keys.all?{ |resp_key| response[resp_key] } && i < @max do
+        puts "i: #{i}"
+        i += 1
+        pagination_token_props =  Hash[req_keys.zip(resp_keys.map { |resp_key| response[resp_key] } ) ]
+        new_response = @client.send(method, props.merge(pagination_token_props)).to_h
 
-        props = args.first || {}
-        while resp_keys.all?{ |resp_key| response[resp_key] } && i < @max do
-          i += 1
-          pagination_token_props =  Hash[req_keys.zip(resp_keys.map { |resp_key| response[resp_key] } ) ]
-          new_response = @client.send(method, props.merge(pagination_token_props)).to_h
-          new_response.each { |k,v| response[k] = v.is_a?(Array) ? response[k].concat(v) : v }
-          response.delete_if { |k,v| !new_response.keys.include?(k) }
-        end
-        resp_keys.each { |resp_key| response.delete resp_key}
+        new_response.each { |k,v| new_response[k] = v.is_a?(Array) ? response[k]+new_response[k] : v }
+
+        response = new_response
       end
+
+      resp_keys.each { |resp_key| response.delete resp_key}
+      response
     end
 
     def extract_keys x

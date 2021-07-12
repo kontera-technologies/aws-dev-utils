@@ -14,7 +14,7 @@ module AwsDevUtils
     end
 
     # @return ClientWrapper with next_token option
-    def with_next_token max=100
+    def with_next_token max=NextTokenWrapper::DEFAULT_MAX
       self.class.new(@client, @options.merge(next_token: max))
     end
 
