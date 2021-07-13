@@ -26,9 +26,9 @@ module AwsDevUtils
       return response if req_keys.empty?
 
       props = args.first || {}
-      while req_keys.all?{ |resp_key| response[resp_key] } && i < @max do
+      while req_keys.all?{ |req_keys| response[req_keys] } && i < @max do
         i += 1
-        pagination_token_props =  Hash[next_req_keys.zip(req_keys.map { |resp_key| response[resp_key] } ) ]
+        pagination_token_props =  Hash[next_req_keys.zip(req_keys.map { |req_keys| response[req_keys] } ) ]
         new_response = @client.send(method, props.merge(pagination_token_props)).to_h
 
         new_response.each { |k,v| new_response[k] = v.is_a?(Array) ? response[k]+new_response[k] : v }
@@ -36,7 +36,7 @@ module AwsDevUtils
         response = new_response
       end
 
-      req_keys.each { |resp_key| response.delete resp_key}
+      req_keys.each { |req_keys| response.delete req_keys}
       response
     end
 
