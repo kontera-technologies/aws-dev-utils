@@ -20,6 +20,9 @@ module AwsDevUtils
       response = @client.send(method, *args, &block).to_h
       i = 1
       req_keys, next_req_keys = extract_keys response
+
+      return response if req_keys.nil?
+
       props = args.first || {}
       while req_keys.all?{ |req_keys| response[req_keys] } && i < @max do
         i += 1
@@ -45,8 +48,7 @@ module AwsDevUtils
         [[:next_continuation_token], [:continuation_token]]
       when response[:next_record_name]
         [[:next_record_type, :next_record_name], [:start_record_type, :start_record_name]]
-      else
-        [[nil]]
+      else nil
       end
     end
 
