@@ -19,17 +19,16 @@ module AwsDevUtils
     def do_call method, *args, &block
       response = @client.send(method, *args, &block).to_h
       i = 1
-      resp_keys, req_keys = extract_keys response
-      resp_keys = Array(resp_keys)
+      req_keys, next_req_keys = extract_keys response
       req_keys = Array(req_keys)
+      next_req_keys = Array(next_req_keys)
 
-      return response if resp_keys.empty?
+      return response if req_keys.empty?
 
       props = args.first || {}
-      while resp_keys.all?{ |resp_key| response[resp_key] } && i < @max do
-        puts "i: #{i}"
+      while req_keys.all?{ |resp_key| response[resp_key] } && i < @max do
         i += 1
-        pagination_token_props =  Hash[req_keys.zip(resp_keys.map { |resp_key| response[resp_key] } ) ]
+        pagination_token_props =  Hash[next_req_keys.zip(req_keys.map { |resp_key| response[resp_key] } ) ]
         new_response = @client.send(method, props.merge(pagination_token_props)).to_h
 
         new_response.each { |k,v| new_response[k] = v.is_a?(Array) ? response[k]+new_response[k] : v }
@@ -37,7 +36,7 @@ module AwsDevUtils
         response = new_response
       end
 
-      resp_keys.each { |resp_key| response.delete resp_key}
+      req_keys.each { |resp_key| response.delete resp_key}
       response
     end
 

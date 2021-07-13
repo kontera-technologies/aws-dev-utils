@@ -128,10 +128,10 @@ module AwsDevUtils
         @vals = vals
       end
 
-      def get_next_value resp_keys, req_keys
-        resp_keys = resp_keys.map {|resp_key| resp_key || 0}.first if resp_keys.uniq.size.eql? 1
-        obj = {vals: @vals[resp_keys]}
-        req_keys.each { |req_keys| obj[req_keys] = resp_keys+1 if (resp_keys+1) < @vals.length }
+      def get_next_value req_keys, next_req_keys
+        req_keys = req_keys.map {|resp_key| resp_key || 0}.first if req_keys.uniq.size.eql? 1
+        obj = {vals: @vals[req_keys]}
+        next_req_keys.each { |next_req_keys| obj[next_req_keys] = req_keys+1 if (req_keys+1) < @vals.length }
         return obj
       end
 
