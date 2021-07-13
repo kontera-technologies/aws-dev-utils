@@ -20,8 +20,6 @@ module AwsDevUtils
       response = @client.send(method, *args, &block).to_h
       i = 1
       req_keys, next_req_keys = extract_keys response
-      req_keys = Array(req_keys)
-      next_req_keys = Array(next_req_keys)
 
       return response if req_keys.empty?
 
@@ -40,15 +38,15 @@ module AwsDevUtils
       response
     end
 
-    def extract_keys x
+    def extract_keys response
       case
-      when x[:next_token]
-        [:next_token, :next_token]
-      when x[:next_marker]
-        [:next_marker, :marker]
-      when x[:next_continuation_token]
-        [:next_continuation_token, :continuation_token]
-      when x[:next_record_name]
+      when response[:next_token]
+        [[:next_token], [:next_token]]
+      when response[:next_marker]
+        [[:next_marker], [:marker]]
+      when response[:next_continuation_token]
+        [[:next_continuation_token], [:continuation_token]]
+      when response[:next_record_name]
         [[:next_record_type, :next_record_name], [:start_record_type, :start_record_name]]
       else nil
       end
