@@ -9,7 +9,7 @@ AWS Dev Utilities is available from RubyGems.
 ### Option 1: Via Bundler
 Add the following to your application's Gemfile:
 ```ruby
-gem 'aws-dev-utils', '~> 1.4'
+gem 'aws-dev-utils', '~> 1.5'
 ```
 And then execute:
 ```
@@ -18,7 +18,7 @@ $ bundle install
 ### Option 2: Via `gem install`
 Execute the following inside your application directory:
 ```
-$ gem install aws-dev-utils -v '~> 1.4'
+$ gem install aws-dev-utils -v '~> 1.5'
 ```
 ## Usage
 Add the following at the top of each Ruby script, or in each module/class you want to use the `with_next_token`, `with_cache` or `with_retry` functions:
@@ -32,7 +32,7 @@ Many AWS operations limit the number of results returned with each response. To 
 This functionality is rarely needed and causes a lot of boilerplate code.  
 Using the `client.with_next_token` the paged results will be collected for you.
 The AWS client function and its results will be concatenated until either no more results are available or the max number of requests is reached.  
-_`with_next_token` works with APIs that use `next_token`, `next_marker` or `next_continuation_token`._
+_`with_next_token` works with APIs that use `next_token`, `next_marker`, `next_continuation_token` or `next_record_name`._
 
 ```ruby
 require 'aws-dev-utils'
